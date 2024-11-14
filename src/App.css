@@ -1,0 +1,37 @@
+.Container{
+       display:flex;
+       flex-direction:column; 
+       justify-content: center;
+       align-content: space-between; 
+    }
+   #signinform h1{
+           color:#2533cf;
+    }
+#signinform{
+      width:50vh;
+      height:50vh;
+      border:pink solid 3px; 
+      padding:2%;
+      position:absolute;
+      top:20%;
+      left:30%;
+      right:50%;
+      bottom:50%;
+}
+#signinform label{
+        
+       font-family:'Roboto', sans-serif;
+}
+#signinform input{
+      background:rgb(234, 223, 223);
+      border:none;
+      margin:2%;
+
+      }
+#signinform button{
+      margin:5%;
+      background-color:#2533cf;
+      color:white;
+      z-index:1;
+      font-size:1vw;
+}
