@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createEditor } from 'slate';
 import './App.css'; 
 import {useState,useMemo,useRef} from 'react'
-
+import axios from 'axios';
 
 export default function Home(){
      
@@ -33,20 +33,27 @@ export default function Home(){
 }
 
 function JoinSession(){
-const keyRef=useRef()
+const inpt1=useRef();
+const inpt2=useRef();
 const navigate=useNavigate()
 
-function handleSubmit(e){
-const key=keyRef.current.value
-navigate(`/${key}`)
-    
+async  function handleSubmit(e){
+const roomname=inpt1.current.value
+const passkey=inpt2.current.value 
+let k= false
+await axios.post('http://localhost:8000/RoomCheck',{RoomName:roomname,passkey:passkey}).then((res)=>{k=res.data})
+ if(k){
+navigate(`/${roomname}`)
+ } 
 
 }
         return(
             <>
-            <label>Enter passKey of session </label>
-            <input type="text" ref={keyRef}></input>
-            <button onClick={handleSubmit}>Submit</button>
+            <label>enter session passkey</label>
+                <input type="text" ref={inpt2}></input>
+                <label>enter name of session</label>
+                <input type="text" ref={inpt1}></input>
+                <button onClick={handleSubmit}>Join</button>
 
             </>
         )
@@ -59,9 +66,15 @@ function CreateSession(){
         const inpt3=useRef();
         const inpt4=useRef();
         const navigate=useNavigate()
-         function handleSubmit(){
+      async    function handleSubmit(){
                 const name=inpt3.current.value;
+                const passkey=inpt2.current.value
+                let k=false 
+             await   axios.post('http://localhost:8000/update',{RoomName:name,passkey:passkey}).then((res)=>{k=res.data}) 
+                if(k){
                 navigate(`/${name}`)
+                }
+                console.log(k)
          }
 
          return(
@@ -78,5 +91,7 @@ function CreateSession(){
               
               
               </>
+
+
          )
 }

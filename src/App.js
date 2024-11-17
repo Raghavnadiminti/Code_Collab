@@ -15,7 +15,7 @@ import axios from 'axios';
 function PrivateRoute({children}){
 
  
-  const [flag,setFlag]=useState(false)
+  const [flag,setFlag]=useState(null)
   useEffect( ()=>{
     const cookie=Cookies.get('PassToken');
     try{
@@ -31,6 +31,9 @@ function PrivateRoute({children}){
       console.log(flag,"pr")
     },[flag])
    
+    if(flag==null){
+      return <><h1>Loading.......</h1></>
+    }
 
   return flag?children:<Navigate to="/login"/>
 }
@@ -50,8 +53,9 @@ export default function App(){
         <Route path="/login" element={<Login/>}> </Route>
                         
                             <Route path="/" element={
-                            
+                            <PrivateRoute>
                               <Home/>
+                              </PrivateRoute>
                               
                             }>  </Route>
                             <Route path="/:name" element={
